@@ -1,3 +1,14 @@
+<?php 
+
+
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,14 +25,20 @@
       display: grid;
       place-content: center;
     }
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 50px;
+    }
 
   </style>
 </head>
 <body>
   <main class="container">
+    <h1>Fill the form to ask for money</h1>
     <div>
-      <h1>Ask for money</h1>
-      <form method="POST">
+      <form class="form" method="POST">
         <label>
           Your e-mail
           <input type="text">
@@ -34,11 +51,13 @@
           Amount to ask
           <input type="number">
         </label>
-        <button type="submit">Send</button>
-        <button type="button">Preview</button>
+        <div>
+          <button type="submit">Send</button>
+          <button type="button">Preview</button>
+        </div>
       </form>
     </div>
-    <div>
+    <div class="preview">
       <h2>E-mail preview</h2>
       <p>From:</p>
       <p>To:</p>
