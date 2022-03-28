@@ -1,13 +1,55 @@
 <?php 
 
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\SMTP;
+  use PHPMailer\PHPMailer\Exception;
 
+  require 'vendor/autoload.php';
 
+  if( isset($_POST["send"]) ) {
 
+    $mail = new PHPMailer(true);
+
+    try {
+
+      $mail->SMTPDebug = SMTP::DEBUG_SERVER;                     
+      $mail->isSMTP();                                           
+      $mail->Host       = 'smtp.example.com';                    
+      $mail->SMTPAuth   = true;                                  
+      $mail->Username   = 'user@example.com';                     
+      $mail->Password   = 'secret';                               
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            
+      $mail->Port       = 465;                                    
+  
+      //Recipients
+      $mail->setFrom('from@example.com', 'Mailer');
+      $mail->addAddress('joe@example.net', 'Joe User');     
+      $mail->addAddress('ellen@example.com');               
+      $mail->addReplyTo('info@example.com', 'Information');
+      $mail->addCC('cc@example.com');
+      $mail->addBCC('bcc@example.com');
+  
+      //Attachments
+      $mail->addAttachment('/var/tmp/file.tar.gz');         
+      $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    
+  
+      //Content
+      $mail->isHTML(true);                                  
+      $mail->Subject = 'Here is the subject';
+      $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+      $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+  
+      $mail->send();
+      echo 'Message has been sent';
+
+    } catch(Exception $e) {
+      echo $e;
+    }
+
+  }
 
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,18 +83,18 @@
       <form class="form" method="POST">
         <label>
           Your e-mail
-          <input type="text">
+          <input type="text" name="sender_email">
         </label>
         <label>
           Receivers e-mail
-          <input type="text">
+          <input type="text" name="receiver_email">
         </label>
         <label>
           Amount to ask
-          <input type="number">
+          <input type="number" name="amount">
         </label>
         <div>
-          <button type="submit">Send</button>
+          <button type="submit" name="send">Send</button>
           <button type="button">Preview</button>
         </div>
       </form>
