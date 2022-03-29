@@ -14,7 +14,9 @@
 
     if(
       filter_var($_POST["sender_email"], FILTER_VALIDATE_EMAIL) &&
-      filter_var($_POST["receiver_email"], FILTER_VALIDATE_EMAIL) 
+      filter_var($_POST["receiver_email"], FILTER_VALIDATE_EMAIL) &&
+      intval($_POST["amount"]) > 0 &&
+      is_numeric($_POST["amount"]) 
       ) {
 
         $mail = new PHPMailer(true);
@@ -56,8 +58,6 @@
         }
 
       }
-
-    
 
   }
 
